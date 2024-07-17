@@ -4,6 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Dashboard = ({ userData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [totalCheckIns, setTotalCheckIns] = useState(0);
+  const [totalCheckOuts, setTotalCheckOuts] = useState(0);
 
   useEffect(() => {
     console.log("Received userData in Dashboard:", userData);
@@ -48,12 +50,36 @@ const Dashboard = ({ userData }) => {
     setSelectedDate(date);
   };
 
+  const calculateCounters = (data) => {
+    let checkInCount = 0;
+    let checkOutCount = 0;
+
+    data.forEach((student) => {
+      Object.keys(student.attendance).forEach((date) => {
+        if (student.attendance[date].checkIn) {
+          checkInCount += 1;
+        }
+        if (student.attendance[date].checkOut) {
+          checkOutCount += 1;
+        }
+      });
+    });
+
+    return { checkInCount, checkOutCount };
+  };
+
   const filteredData = filterDataForDate(userData, selectedDate);
   const organizedData = organizeDataByGrade(filteredData);
 
+  useEffect(() => {
+    const { checkInCount, checkOutCount } = calculateCounters(filteredData);
+    setTotalCheckIns(checkInCount);
+    setTotalCheckOuts(checkOutCount);
+  }, [filteredData]);
+
   return (
     <main className="flex min-h-screen bg-[#031525] justify-center items-center">
-      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
         <h1 className="text-4xl font-bold mb-6">Dashboard</h1>
         <div className="mb-6">
           <DatePicker
@@ -63,44 +89,50 @@ const Dashboard = ({ userData }) => {
             className="p-2 bg-gray-700 text-white rounded-lg w-full"
           />
         </div>
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold">Total Check-Ins: {totalCheckIns}</h2>
+          <h2 className="text-xl font-semibold">Total Check-Outs: {totalCheckOuts}</h2>
+        </div>
         <div>
-          {Object.keys(organizedData).map((grade) => (
-            <div key={grade} className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 capitalize">
-                {grade}
-              </h2>
-              {organizedData[grade].length > 0 ? (
-                organizedData[grade].map((student) => (
-                  <div
-                    key={student.name}
-                    className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg">
-                    <div className="grid grid-cols-[2fr_3fr] gap-1 items-center">
-                      <h3 className="text-lg font-semibold truncate">{student.name}</h3>
-                      <ul className="flex space-x-4 justify-end">
-                        {Object.keys(student.attendance).map((date) => (
-                          <li key={date} className="flex items-center space-x-2">
-                            <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
-                              {new Date(student.attendance[date].checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </span>
-                            <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
-                              {new Date(student.attendance[date].checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+          {Object.keys(organizedData).map((grade) => {
+            const { checkInCount, checkOutCount } = calculateCounters(organizedData[grade]);
+            return (
+              <div key={grade} className="mb-8">
+                <h2 className="text-2xl font-semibold mb-4 capitalize">
+                  {grade} (Check-Ins: {checkInCount}, Check-Outs: {checkOutCount})
+                </h2>
+                {organizedData[grade].length > 0 ? (
+                  organizedData[grade].map((student) => (
+                    <div
+                      key={student.name}
+                      className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg">
+                      <div className="grid grid-cols-[2fr_3fr] gap-1 items-center">
+                        <h3 className="text-lg font-semibold truncate">{student.name}</h3>
+                        <ul className="flex space-x-4 justify-end">
+                          {Object.keys(student.attendance).map((date) => (
+                            <li key={date} className="flex items-center space-x-2">
+                              <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
+                                {new Date(student.attendance[date].checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                              <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
+                                {new Date(student.attendance[date].checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <p>No data available for {grade}</p>
-              )}
-            </div>
-          ))}
+                  ))
+                ) : (
+                  <p>No data available for {grade}</p>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </main>
   );
-
 };
 
 export default Dashboard;
