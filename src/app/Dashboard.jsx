@@ -53,7 +53,7 @@ const Dashboard = ({ userData }) => {
 
   return (
     <main className="flex min-h-screen bg-[#031525] justify-center items-center">
-      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-lg">
         <h1 className="text-4xl font-bold mb-6">Dashboard</h1>
         <div className="mb-6">
           <DatePicker
@@ -74,7 +74,7 @@ const Dashboard = ({ userData }) => {
                   <div
                     key={student.name}
                     className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg">
-                    <div className="grid grid-cols-[1fr_1fr] gap-1 items-center">
+                    <div className="grid grid-cols-[2fr_3fr] gap-1 items-center">
                       <h3 className="text-lg font-semibold truncate">{student.name}</h3>
                       <ul className="flex space-x-4 justify-end">
                         {Object.keys(student.attendance).map((date) => (
