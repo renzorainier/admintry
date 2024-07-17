@@ -99,7 +99,7 @@ const Dashboard = ({ userData }) => {
             return (
               <div key={grade} className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4 capitalize">
-                  {grade} (Check-Ins: {checkInCount}, Check-Outs: {checkOutCount}, Absents: {absentCount})
+                  {grade} {checkInCount}{absentCount}{checkOutCount}
                 </h2>
                 {organizedData[grade].length > 0 ? (
                   organizedData[grade].map((student) => (
