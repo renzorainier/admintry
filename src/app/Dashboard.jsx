@@ -20,17 +20,10 @@ const Dashboard = ({ userData }) => {
 
   const filterDataForDate = (data, date) => {
     const formattedDate = formatDate(date);
-    return data
-      .map((student) => {
-        const attendanceForDate = Object.keys(student.attendance)
-          .filter((date) => date === formattedDate)
-          .reduce((obj, key) => {
-            obj[key] = student.attendance[key];
-            return obj;
-          }, {});
-        return { ...student, attendance: attendanceForDate };
-      })
-      .filter((student) => Object.keys(student.attendance).length > 0);
+    return data.map((student) => {
+      const attendanceForDate = student.attendance[formattedDate] || {};
+      return { ...student, attendance: { [formattedDate]: attendanceForDate } };
+    });
   };
 
   const organizeDataByGrade = (data) => {
@@ -55,14 +48,13 @@ const Dashboard = ({ userData }) => {
     let checkOutCount = 0;
 
     data.forEach((student) => {
-      Object.keys(student.attendance).forEach((date) => {
-        if (student.attendance[date].checkIn) {
-          checkInCount += 1;
-        }
-        if (student.attendance[date].checkOut) {
-          checkOutCount += 1;
-        }
-      });
+      const attendance = student.attendance[formatDate(selectedDate)];
+      if (attendance.checkIn) {
+        checkInCount += 1;
+      }
+      if (attendance.checkOut) {
+        checkOutCount += 1;
+      }
     });
 
     return { checkInCount, checkOutCount };
@@ -109,16 +101,20 @@ const Dashboard = ({ userData }) => {
                       <div className="grid grid-cols-[2fr_3fr] gap-1 items-center">
                         <h3 className="text-lg font-semibold truncate">{student.name}</h3>
                         <ul className="flex space-x-4 justify-end">
-                          {Object.keys(student.attendance).map((date) => (
-                            <li key={date} className="flex items-center space-x-2">
-                              <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
-                                {new Date(student.attendance[date].checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                              </span>
-                              <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
-                                {new Date(student.attendance[date].checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                              </span>
-                            </li>
-                          ))}
+                          {student.attendance[formatDate(selectedDate)].checkIn ? (
+                            <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
+                              {new Date(student.attendance[formatDate(selectedDate)].checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          ) : (
+                            <span className="text-white px-3 py-1">Absent</span>
+                          )}
+                          {student.attendance[formatDate(selectedDate)].checkOut ? (
+                            <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
+                              {new Date(student.attendance[formatDate(selectedDate)].checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          ) : (
+                            <span className="text-white px-3 py-1">Absent</span>
+                          )}
                         </ul>
                       </div>
                     </div>
