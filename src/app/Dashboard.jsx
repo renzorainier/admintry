@@ -73,17 +73,17 @@ const Dashboard = ({ userData }) => {
                   <div
                     key={student.name}
                     className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg">
-                    <div className="flex items-center justify-between">
+                    <div className="grid grid-cols-2 gap-4">
                       <h3 className="text-lg font-semibold">{student.name}</h3>
-                      <ul className="flex space-x-4">
+                      <ul className="flex space-x-4 justify-end">
                         {Object.keys(student.attendance).map((date) => (
-                          <li key={date} className="flex items-center">
+                          <li key={date} className="flex items-center space-x-2">
                             <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
                               {new Date(
                                 student.attendance[date].checkIn
                               ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
-                            <span className="bg-red-500 text-white px-3 py-1 rounded-lg ml-2">
+                            <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
                               {new Date(
                                 student.attendance[date].checkOut
                               ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -103,6 +103,7 @@ const Dashboard = ({ userData }) => {
       </div>
     </main>
   );
+
 };
 
 export default Dashboard;
