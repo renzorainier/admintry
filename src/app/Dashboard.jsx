@@ -6,6 +6,7 @@ const Dashboard = ({ userData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [totalCheckIns, setTotalCheckIns] = useState(0);
   const [totalCheckOuts, setTotalCheckOuts] = useState(0);
+  const [totalAbsents, setTotalAbsents] = useState(0);
 
   useEffect(() => {
     console.log("Received userData in Dashboard:", userData);
@@ -21,7 +22,7 @@ const Dashboard = ({ userData }) => {
   const filterDataForDate = (data, date) => {
     const formattedDate = formatDate(date);
     return data.map((student) => {
-      const attendanceForDate = student.attendance[formattedDate] || {};
+      const attendanceForDate = student.attendance[formattedDate] || null;
       return { ...student, attendance: { [formattedDate]: attendanceForDate } };
     });
   };
@@ -46,27 +47,33 @@ const Dashboard = ({ userData }) => {
   const calculateCounters = (data) => {
     let checkInCount = 0;
     let checkOutCount = 0;
+    let absentCount = 0;
 
     data.forEach((student) => {
       const attendance = student.attendance[formatDate(selectedDate)];
-      if (attendance.checkIn) {
-        checkInCount += 1;
-      }
-      if (attendance.checkOut) {
-        checkOutCount += 1;
+      if (attendance) {
+        if (attendance.checkIn) {
+          checkInCount += 1;
+        }
+        if (attendance.checkOut) {
+          checkOutCount += 1;
+        }
+      } else {
+        absentCount += 1;
       }
     });
 
-    return { checkInCount, checkOutCount };
+    return { checkInCount, checkOutCount, absentCount };
   };
 
   const filteredData = filterDataForDate(userData, selectedDate);
   const organizedData = organizeDataByGrade(filteredData);
 
   useEffect(() => {
-    const { checkInCount, checkOutCount } = calculateCounters(filteredData);
+    const { checkInCount, checkOutCount, absentCount } = calculateCounters(filteredData);
     setTotalCheckIns(checkInCount);
     setTotalCheckOuts(checkOutCount);
+    setTotalAbsents(absentCount);
   }, [filteredData]);
 
   return (
@@ -84,14 +91,15 @@ const Dashboard = ({ userData }) => {
         <div className="mb-6">
           <h2 className="text-xl font-semibold">Total Check-Ins: {totalCheckIns}</h2>
           <h2 className="text-xl font-semibold">Total Check-Outs: {totalCheckOuts}</h2>
+          <h2 className="text-xl font-semibold">Total Absents: {totalAbsents}</h2>
         </div>
         <div>
           {Object.keys(organizedData).map((grade) => {
-            const { checkInCount, checkOutCount } = calculateCounters(organizedData[grade]);
+            const { checkInCount, checkOutCount, absentCount } = calculateCounters(organizedData[grade]);
             return (
               <div key={grade} className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4 capitalize">
-                  {grade} (Check-Ins: {checkInCount}, Check-Outs: {checkOutCount})
+                  {grade} (Check-Ins: {checkInCount}, Check-Outs: {checkOutCount}, Absents: {absentCount})
                 </h2>
                 {organizedData[grade].length > 0 ? (
                   organizedData[grade].map((student) => (
@@ -101,17 +109,19 @@ const Dashboard = ({ userData }) => {
                       <div className="grid grid-cols-[2fr_3fr] gap-1 items-center">
                         <h3 className="text-lg font-semibold truncate">{student.name}</h3>
                         <ul className="flex space-x-4 justify-end">
-                          {student.attendance[formatDate(selectedDate)].checkIn ? (
-                            <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
-                              {new Date(student.attendance[formatDate(selectedDate)].checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </span>
-                          ) : (
-                            <span className="text-white px-3 py-1">Absent</span>
-                          )}
-                          {student.attendance[formatDate(selectedDate)].checkOut ? (
-                            <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
-                              {new Date(student.attendance[formatDate(selectedDate)].checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </span>
+                          {student.attendance[formatDate(selectedDate)] ? (
+                            <>
+                              <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
+                                {student.attendance[formatDate(selectedDate)].checkIn ?
+                                  new Date(student.attendance[formatDate(selectedDate)].checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                  : "NA"}
+                              </span>
+                              <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
+                                {student.attendance[formatDate(selectedDate)].checkOut ?
+                                  new Date(student.attendance[formatDate(selectedDate)].checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                  : "NA"}
+                              </span>
+                            </>
                           ) : (
                             <span className="text-white px-3 py-1">Absent</span>
                           )}
