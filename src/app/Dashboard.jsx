@@ -103,7 +103,7 @@ const Dashboard = ({ userData }) => {
     {grade}
   </h2>
   <div className="flex space-x-4">
-    <div className="bg-blue-500 text-white px-5 py-1 rounded-lg flex-grow text-center">
+    <div className="bg-green-500 text-white px-5 py-1 rounded-lg flex-grow text-center">
       {checkInCount}
     </div>
     <div className="bg-gray-500 text-white px-5 py-1 rounded-lg flex-grow text-center">
