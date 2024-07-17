@@ -78,12 +78,12 @@ const Dashboard = ({ userData }) => {
                       <ul className="flex space-x-4 justify-end">
                         {Object.keys(student.attendance).map((date) => (
                           <li key={date} className="flex items-center space-x-2">
-                            <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
+                            <span className="bg-green-500 text-white rounded-lg">
                               {new Date(
                                 student.attendance[date].checkIn
                               ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
-                            <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
+                            <span className="bg-red-500 text-white  rounded-lg">
                               {new Date(
                                 student.attendance[date].checkOut
                               ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
