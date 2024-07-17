@@ -106,7 +106,7 @@ const Dashboard = ({ userData }) => {
                     <div
                       key={student.name}
                       className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg">
-                      <div className="grid grid-cols-[2fr_3fr] gap-1 items-center">
+                      <div className="grid grid-cols-[1fr_2fr] gap-4 items-center">
                         <h3 className="text-lg font-semibold truncate">{student.name}</h3>
                         <ul className="flex space-x-4 justify-end">
                           {student.attendance[formatDate(selectedDate)] ? (
@@ -139,6 +139,7 @@ const Dashboard = ({ userData }) => {
       </div>
     </main>
   );
+
 };
 
 export default Dashboard;
