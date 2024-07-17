@@ -104,30 +104,42 @@ const Dashboard = ({ userData }) => {
                 {organizedData[grade].length > 0 ? (
                   organizedData[grade].map((student) => (
                     <div
-                      key={student.name}
-                      className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg">
-                      <div className="grid grid-cols-[1fr_2fr] gap-4 items-center">
-                        <h3 className="text-lg font-semibold truncate">{student.name}</h3>
-                        <ul className="flex space-x-4 justify-end">
-                          {student.attendance[formatDate(selectedDate)] ? (
-                            <>
-                              <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
-                                {student.attendance[formatDate(selectedDate)].checkIn ?
-                                  new Date(student.attendance[formatDate(selectedDate)].checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                                  : "NA"}
-                              </span>
-                              <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
-                                {student.attendance[formatDate(selectedDate)].checkOut ?
-                                  new Date(student.attendance[formatDate(selectedDate)].checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                                  : "NA"}
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-white px-3 py-1">Absent</span>
-                          )}
-                        </ul>
-                      </div>
+                    key={student.name}
+                    className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg"
+                  >
+                    <div className="grid grid-cols-[1fr_2fr] gap-4 items-center">
+                      <h3 className="text-lg font-semibold truncate">{student.name}</h3>
+                      <ul className="flex space-x-4 justify-end">
+                        {student.attendance[formatDate(selectedDate)] ? (
+                          <>
+                            <span className="bg-green-500 text-white p-1 rounded-lg w-20 text-center">
+                              {student.attendance[formatDate(selectedDate)].checkIn
+                                ? new Date(
+                                    student.attendance[formatDate(selectedDate)].checkIn
+                                  ).toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })
+                                : "NA"}
+                            </span>
+                            <span className="bg-red-500 text-white p-1 rounded-lg w-20 text-center">
+                              {student.attendance[formatDate(selectedDate)].checkOut
+                                ? new Date(
+                                    student.attendance[formatDate(selectedDate)].checkOut
+                                  ).toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })
+                                : "NA"}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-white px-3 py-1">Absent</span>
+                        )}
+                      </ul>
                     </div>
+                  </div>
+
                   ))
                 ) : (
                   <p>No data available for {grade}</p>
