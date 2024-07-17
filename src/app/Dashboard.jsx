@@ -81,12 +81,12 @@ const Dashboard = ({ userData }) => {
                             <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
                               {new Date(
                                 student.attendance[date].checkIn
-                              ).toLocaleTimeString()}
+                              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                             <span className="bg-red-500 text-white px-3 py-1 rounded-lg ml-2">
                               {new Date(
                                 student.attendance[date].checkOut
-                              ).toLocaleTimeString()}
+                              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </li>
                         ))}
@@ -103,9 +103,6 @@ const Dashboard = ({ userData }) => {
       </div>
     </main>
   );
-
-
-
 };
 
 export default Dashboard;
