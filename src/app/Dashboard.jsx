@@ -52,14 +52,14 @@ const Dashboard = ({ userData }) => {
 
   return (
     <main className="flex min-h-screen bg-[#031525] justify-center items-center">
-      <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-        <div className="mb-4">
+      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <h1 className="text-4xl font-bold mb-6">Dashboard</h1>
+        <div className="mb-6">
           <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
             dateFormat="yyyy-MM-dd"
-            className="p-2 bg-gray-700 text-white rounded-lg custom-datepicker"
+            className="p-2 bg-gray-700 text-white rounded-lg w-full"
           />
         </div>
         <div>
@@ -73,20 +73,16 @@ const Dashboard = ({ userData }) => {
                   <div
                     key={student.name}
                     className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg">
-                    <div className="grid grid-cols-2 gap-4">
-                      <h3 className="text-lg font-semibold">{student.name}</h3>
+                    <div className="grid grid-cols-[1fr_2fr] gap-4 items-center">
+                      <h3 className="text-lg font-semibold truncate">{student.name}</h3>
                       <ul className="flex space-x-4 justify-end">
                         {Object.keys(student.attendance).map((date) => (
-                          <li key={date} className="items-center space-x-2">
-                            <span className="bg-green-500 text-white p-1 rounded-lg">
-                              {new Date(
-                                student.attendance[date].checkIn
-                              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          <li key={date} className="flex items-center space-x-2">
+                            <span className="bg-green-500 text-white px-3 py-1 rounded-lg">
+                              {new Date(student.attendance[date].checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
-                            <span className="bg-red-500 text-white p-1 rounded-lg">
-                              {new Date(
-                                student.attendance[date].checkOut
-                              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            <span className="bg-red-500 text-white px-3 py-1 rounded-lg">
+                              {new Date(student.attendance[date].checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </li>
                         ))}
