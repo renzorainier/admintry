@@ -136,7 +136,7 @@ const Dashboard = ({ userData }) => {
                                   })
                                 : "NA"}
                             </span>
-                            <span className="bg-red-500 text-white p-1 rounded-lg w-20 text-center">
+                            <span className="bg-yellow-500 text-white p-1 rounded-lg w-20 text-center">
                               {student.attendance[formatDate(selectedDate)].checkOut
                                 ? new Date(
                                     student.attendance[formatDate(selectedDate)].checkOut
