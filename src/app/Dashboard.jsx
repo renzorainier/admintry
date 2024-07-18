@@ -115,7 +115,7 @@ const Dashboard = ({ userData }) => {
             return (
               <div key={grade} className="mb-8">
                 <div
-                  className="flex items-center justify-between mb-6 w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
+                  className="flex items-center justify-between  w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
                   onClick={() => toggleGrade(grade)}
                 >
                   <h2 className="text-2xl font-semibold capitalize w-24">
@@ -140,7 +140,7 @@ const Dashboard = ({ userData }) => {
                       organizedData[grade].map((student) => (
                         <div
                           key={student.name}
-                          className="mb-4 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg"
+                          className="mb-1 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg"
                         >
                           <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
                             <h3 className="text-lg font-semibold truncate text-white">
