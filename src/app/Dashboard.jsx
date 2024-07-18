@@ -126,7 +126,7 @@ const Dashboard = ({ userData }) => {
                       <div className="bg-green-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
                         {checkInCount}
                       </div>
-                      <div className="bg-red-700 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
+                      <div className="bg-red-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
                         {absentCount}
                       </div>
                       <div className="bg-yellow-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
