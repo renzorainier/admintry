@@ -177,7 +177,7 @@ const Dashboard = ({ userData }) => {
                                   </span>
                                 </>
                               ) : (
-                                <span className="text-white px-3 py-2">
+                                <span className="text-white px-3 py-2 bg-gray-800">
                                   Absent
                                 </span>
                               )}
