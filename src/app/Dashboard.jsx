@@ -152,7 +152,7 @@ const Dashboard = ({ userData }) => {
                                         })
                                       : "NA"}
                                   </span>
-                                  <span className="bg-yellow-500 text-white px-3 py-2 rounded-md w-24 text-center shadow-sm">
+                                  <span className="bg-yellow-500 text-white px-3 py-2 rounded-r-md w-24 text-center shadow-sm">
                                     {student.attendance[formatDate(selectedDate)].checkOut
                                       ? new Date(student.attendance[formatDate(selectedDate)].checkOut).toLocaleTimeString([], {
                                           hour: "2-digit",
