@@ -122,17 +122,17 @@ const Dashboard = ({ userData }) => {
                     {grade}
                   </h2>
                   <div className="flex justify-end w-full">
-                    <div className="flex space-x-4">
-                      <div className="bg-green-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
-                        {checkInCount}
-                      </div>
-                      <div className="bg-red-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
-                        {absentCount}
-                      </div>
-                      <div className="bg-yellow-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
-                        {checkOutCount}
-                      </div>
-                    </div>
+                  <div className="flex space-x-4">
+      <div className="bg-green-500 text-white px-4 py-2 rounded-md text-center shadow-md" style={{ width: '60px' }}>
+        {checkInCount}
+      </div>
+      <div className="bg-red-500 text-white px-4 py-2 rounded-md text-center shadow-md" style={{ width: '60px' }}>
+        {absentCount}
+      </div>
+      <div className="bg-yellow-500 text-white px-4 py-2 rounded-md text-center shadow-md" style={{ width: '60px' }}>
+        {checkOutCount}
+      </div>
+    </div>
                   </div>
                   <FaChevronDown
                     className={`transition-transform ml-4 ${
