@@ -136,23 +136,23 @@ const Dashboard = ({ userData }) => {
                 <div
                   className="flex items-center w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
                   onClick={() => toggleGrade(grade)}>
-                  <h2 className="text-2xl font-semibold capitalize w-24">
+                  <h2 className="text-2xl font-bold capitalize w-24">
                     {grade}
                   </h2>
                   <div className="flex justify-end w-full">
                     <div className="flex space-x-4">
                       <div
-                        className="bg-green-500 text-white px-4 py-2 rounded-md text-center shadow-md"
+                        className="bg-green-500 text-2xl font-bold text-white px-4 py-2 rounded-md text-center shadow-md"
                         style={{ width: "60px" }}>
                         {checkInCount}
                       </div>
                       <div
-                        className="bg-red-500 text-white px-4 py-2 rounded-md text-center shadow-md"
+                        className="bg-red-500 text-2xl font-bold text-white px-4 py-2 rounded-md text-center shadow-md"
                         style={{ width: "60px" }}>
                         {absentCount}
                       </div>
                       <div
-                        className="bg-yellow-500 text-white px-4 py-2 rounded-md text-center shadow-md"
+                        className="bg-yellow-500 text-2xl font-bold text-white px-4 py-2 rounded-md text-center shadow-md"
                         style={{ width: "60px" }}>
                         {checkOutCount}
                       </div>
