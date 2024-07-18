@@ -139,7 +139,7 @@ const Dashboard = ({ userData }) => {
                       organizedData[grade].map((student) => (
                         <div
                           key={student.name}
-                          className="mb-1 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg">
+                          className="mb-1 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg">
                           <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
                             <h3 className="text-lg font-semibold truncate text-white">
                               {student.name}
