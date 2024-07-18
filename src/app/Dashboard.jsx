@@ -105,7 +105,7 @@ const Dashboard = ({ userData }) => {
         <FaCheck size={28} />
       </div>
       <h2 className="text-2xl font-bold ml-6 text-white">
-        Log In: <span className="text-3xl">{totalCheckIns}</span>
+        Logged In: <span className="text-3xl">{totalCheckIns}</span>
       </h2>
     </div>
     <div className="flex items-center mb-6">
@@ -113,7 +113,7 @@ const Dashboard = ({ userData }) => {
         <FaSignOutAlt size={28} />
       </div>
       <h2 className="text-2xl font-bold ml-6 text-white">
-        Log Out: <span className="text-3xl">{totalCheckOuts}</span>
+        Logged Out: <span className="text-3xl">{totalCheckOuts}</span>
       </h2>
     </div>
     <div className="flex items-center">
