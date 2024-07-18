@@ -125,7 +125,7 @@ const Dashboard = ({ userData }) => {
                     <div className="bg-green-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
                       {checkInCount}
                     </div>
-                    <div className="bg-gray-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
+                    <div className="bg-gray-700 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
                       {absentCount}
                     </div>
                     <div className="bg-yellow-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
@@ -140,7 +140,7 @@ const Dashboard = ({ userData }) => {
                       organizedData[grade].map((student) => (
                         <div
                           key={student.name}
-                          className="mb-1 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg"
+                          className="mb-1 p-4 bg-gray-600 rounded-lg transition duration-300 hover:shadow-lg"
                         >
                           <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
                             <h3 className="text-lg font-semibold truncate text-white">
@@ -177,7 +177,7 @@ const Dashboard = ({ userData }) => {
                                   </span>
                                 </>
                               ) : (
-                                <span className="text-white px-3 py-2 bg-gray-800">
+                                <span className="text-white px-3 py-2 bg-gray-700">
                                   Absent
                                 </span>
                               )}
