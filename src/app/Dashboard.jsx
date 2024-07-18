@@ -141,10 +141,10 @@ const Dashboard = ({ userData }) => {
                         >
                           <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
                             <h3 className="text-lg font-semibold truncate text-white">{student.name}</h3>
-                            <ul className="flex space-x-4 justify-end">
+                            <ul className="flex  justify-end">
                               {student.attendance[formatDate(selectedDate)] ? (
                                 <>
-                                  <span className="bg-green-500 text-white px-3 py-2 rounded-md w-24 text-center shadow-sm">
+                                  <span className="bg-green-500 text-white px-3 py-2 rounded-l-md w-24 text-center shadow-sm">
                                     {student.attendance[formatDate(selectedDate)].checkIn
                                       ? new Date(student.attendance[formatDate(selectedDate)].checkIn).toLocaleTimeString([], {
                                           hour: "2-digit",
