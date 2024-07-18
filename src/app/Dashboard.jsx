@@ -87,89 +87,68 @@ const Dashboard = ({ userData }) => {
 
   return (
     <main className="flex min-h-screen bg-[#031525] justify-center items-center">
-      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 className="text-4xl font-bold mb-6">Dashboard</h1>
-        <div className="mb-6">
+      <div className="bg-gray-900 text-white p-8 rounded-xl shadow-xl w-full max-w-3xl">
+        <h1 className="text-4xl font-bold mb-8">Dashboard</h1>
+        <div className="mb-8">
           <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
             dateFormat="yyyy-MM-dd"
-            className="p-2 bg-gray-700 text-white rounded-lg w-full"
+            className="p-3 bg-gray-700 text-white rounded-lg w-full"
           />
         </div>
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold">
-            Total Check-Ins: {totalCheckIns}
-          </h2>
-          <h2 className="text-xl font-semibold">
-            Total Check-Outs: {totalCheckOuts}
-          </h2>
-          <h2 className="text-xl font-semibold">
-            Total Absents: {totalAbsents}
-          </h2>
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Total Check-Ins: {totalCheckIns}</h2>
+          <h2 className="text-xl font-semibold mb-2">Total Check-Outs: {totalCheckOuts}</h2>
+          <h2 className="text-xl font-semibold">Total Absents: {totalAbsents}</h2>
         </div>
         <div>
           {Object.keys(organizedData).map((grade) => {
-            const { checkInCount, checkOutCount, absentCount } =
-              calculateCounters(organizedData[grade]);
+            const { checkInCount, checkOutCount, absentCount } = calculateCounters(organizedData[grade]);
             return (
-              <div key={grade} className="mb-8">
+              <div key={grade} className="mb-6">
                 <div
-                  className="flex items-center justify-between  w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
+                  className="flex items-center justify-between w-full bg-gray-800 p-5 rounded-lg cursor-pointer"
                   onClick={() => toggleGrade(grade)}
                 >
-                  <h2 className="text-2xl font-semibold capitalize w-24">
-                    {grade}
-                  </h2>
+                  <h2 className="text-2xl font-semibold capitalize w-24">{grade}</h2>
                   <div className="flex space-x-4">
-                    <div className="bg-green-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
+                    <div className="bg-green-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
                       {checkInCount}
                     </div>
-                    <div className="bg-gray-700 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
+                    <div className="bg-gray-700 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
                       {absentCount}
                     </div>
-                    <div className="bg-yellow-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
+                    <div className="bg-yellow-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
                       {checkOutCount}
                     </div>
                   </div>
                 </div>
 
                 {expandedGrades[grade] && (
-                  <div className="mt-1">
+                  <div className="mt-2">
                     {organizedData[grade].length > 0 ? (
                       organizedData[grade].map((student) => (
                         <div
                           key={student.name}
-                          className="mb-1 p-4 bg-gray-600 rounded-lg transition duration-300 hover:shadow-lg"
+                          className="mb-2 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg"
                         >
                           <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
-                            <h3 className="text-lg font-semibold truncate text-white">
-                              {student.name}
-                            </h3>
+                            <h3 className="text-lg font-semibold truncate text-white">{student.name}</h3>
                             <ul className="flex space-x-4 justify-end">
                               {student.attendance[formatDate(selectedDate)] ? (
                                 <>
-                                  <span className="bg-green-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
-                                    {student.attendance[formatDate(selectedDate)]
-                                      .checkIn
-                                      ? new Date(
-                                          student.attendance[
-                                            formatDate(selectedDate)
-                                          ].checkIn
-                                        ).toLocaleTimeString([], {
+                                  <span className="bg-green-500 text-white px-3 py-2 rounded-md w-24 text-center shadow-sm">
+                                    {student.attendance[formatDate(selectedDate)].checkIn
+                                      ? new Date(student.attendance[formatDate(selectedDate)].checkIn).toLocaleTimeString([], {
                                           hour: "2-digit",
                                           minute: "2-digit",
                                         })
                                       : "NA"}
                                   </span>
-                                  <span className="bg-yellow-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
-                                    {student.attendance[formatDate(selectedDate)]
-                                      .checkOut
-                                      ? new Date(
-                                          student.attendance[
-                                            formatDate(selectedDate)
-                                          ].checkOut
-                                        ).toLocaleTimeString([], {
+                                  <span className="bg-yellow-500 text-white px-3 py-2 rounded-md w-24 text-center shadow-sm">
+                                    {student.attendance[formatDate(selectedDate)].checkOut
+                                      ? new Date(student.attendance[formatDate(selectedDate)].checkOut).toLocaleTimeString([], {
                                           hour: "2-digit",
                                           minute: "2-digit",
                                         })
@@ -177,18 +156,14 @@ const Dashboard = ({ userData }) => {
                                   </span>
                                 </>
                               ) : (
-                                <span className="text-white px-3 py-2 bg-gray-700">
-                                  Absent
-                                </span>
+                                <span className="text-white px-3 py-2 bg-gray-700 rounded-md">Absent</span>
                               )}
                             </ul>
                           </div>
                         </div>
                       ))
                     ) : (
-                      <p className="text-gray-400">
-                        No data available for {grade}
-                      </p>
+                      <p className="text-gray-400">No data available for {grade}</p>
                     )}
                   </div>
                 )}
@@ -199,6 +174,7 @@ const Dashboard = ({ userData }) => {
       </div>
     </main>
   );
+
 
 };
 
