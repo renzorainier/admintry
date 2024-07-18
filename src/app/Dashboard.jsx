@@ -7,6 +7,7 @@ const Dashboard = ({ userData }) => {
   const [totalCheckIns, setTotalCheckIns] = useState(0);
   const [totalCheckOuts, setTotalCheckOuts] = useState(0);
   const [totalAbsents, setTotalAbsents] = useState(0);
+  const [expandedGrades, setExpandedGrades] = useState({});
 
   useEffect(() => {
     console.log("Received userData in Dashboard:", userData);
@@ -77,6 +78,13 @@ const Dashboard = ({ userData }) => {
     setTotalAbsents(absentCount);
   }, [filteredData]);
 
+  const toggleGrade = (grade) => {
+    setExpandedGrades((prev) => ({
+      ...prev,
+      [grade]: !prev[grade],
+    }));
+  };
+
   return (
     <main className="flex min-h-screen bg-[#031525] justify-center items-center">
       <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
@@ -105,8 +113,11 @@ const Dashboard = ({ userData }) => {
             const { checkInCount, checkOutCount, absentCount } =
               calculateCounters(organizedData[grade]);
             return (
-              <div key={grade} className="mb-8 ">
-                <div className="flex items-center justify-between mb-6 w-full bg-gray-800 p-4 rounded-lg">
+              <div key={grade} className="mb-8">
+                <div
+                  className="flex items-center justify-between mb-6 w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
+                  onClick={() => toggleGrade(grade)}
+                >
                   <h2 className="text-2xl font-semibold capitalize">{grade}</h2>
                   <div className="flex space-x-4">
                     <div className="bg-green-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
@@ -121,55 +132,61 @@ const Dashboard = ({ userData }) => {
                   </div>
                 </div>
 
-                {organizedData[grade].length > 0 ? (
-                  organizedData[grade].map((student) => (
-                    <div
-                      key={student.name}
-                      className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg"
-                    >
-                      <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
-                        <h3 className="text-lg font-semibold truncate text-white">
-                          {student.name}
-                        </h3>
-                        <ul className="flex space-x-4 justify-end">
-                          {student.attendance[formatDate(selectedDate)] ? (
-                            <>
-                              <span className="bg-green-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
-                                {student.attendance[formatDate(selectedDate)]
-                                  .checkIn
-                                  ? new Date(
-                                      student.attendance[
-                                        formatDate(selectedDate)
-                                      ].checkIn
-                                    ).toLocaleTimeString([], {
-                                      hour: "2-digit",
-                                      minute: "2-digit",
-                                    })
-                                  : "NA"}
-                              </span>
-                              <span className="bg-yellow-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
-                                {student.attendance[formatDate(selectedDate)]
-                                  .checkOut
-                                  ? new Date(
-                                      student.attendance[
-                                        formatDate(selectedDate)
-                                      ].checkOut
-                                    ).toLocaleTimeString([], {
-                                      hour: "2-digit",
-                                      minute: "2-digit",
-                                    })
-                                  : "NA"}
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-white px-3 py-2">Absent</span>
-                          )}
-                        </ul>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-gray-400">No data available for {grade}</p>
+                {expandedGrades[grade] && (
+                  <>
+                    {organizedData[grade].length > 0 ? (
+                      organizedData[grade].map((student) => (
+                        <div
+                          key={student.name}
+                          className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg"
+                        >
+                          <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
+                            <h3 className="text-lg font-semibold truncate text-white">
+                              {student.name}
+                            </h3>
+                            <ul className="flex space-x-4 justify-end">
+                              {student.attendance[formatDate(selectedDate)] ? (
+                                <>
+                                  <span className="bg-green-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
+                                    {student.attendance[formatDate(selectedDate)].checkIn
+                                      ? new Date(
+                                          student.attendance[
+                                            formatDate(selectedDate)
+                                          ].checkIn
+                                        ).toLocaleTimeString([], {
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })
+                                      : "NA"}
+                                  </span>
+                                  <span className="bg-yellow-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
+                                    {student.attendance[formatDate(selectedDate)].checkOut
+                                      ? new Date(
+                                          student.attendance[
+                                            formatDate(selectedDate)
+                                          ].checkOut
+                                        ).toLocaleTimeString([], {
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })
+                                      : "NA"}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="text-white px-3 py-2">
+                                  Absent
+                                </span>
+                              )}
+                            </ul>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-gray-400">
+                        No data available for {grade}
+                      </p>
+                    )}
+                  </>
                 )}
               </div>
             );
