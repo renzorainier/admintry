@@ -136,7 +136,7 @@ const Dashboard = ({ userData }) => {
                 <div
                   className="flex items-center w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
                   onClick={() => toggleGrade(grade)}>
-                  <h2 className="text-2xl font-bold capitalize w-24">
+                  <h2 className="text-3xl font-bold capitalize w-24">
                     {grade}
                   </h2>
                   <div className="flex justify-end w-full">
