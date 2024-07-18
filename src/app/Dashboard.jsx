@@ -32,9 +32,9 @@ const Dashboard = ({ userData }) => {
     const organizedData = {};
 
     grades.forEach((grade) => {
-      organizedData[grade] = data.filter(
-        (student) => student.level.toLowerCase() === grade
-      );
+      organizedData[grade] = data
+        .filter((student) => student.level.toLowerCase() === grade)
+        .sort((a, b) => a.name.localeCompare(b.name));
     });
 
     return organizedData;
@@ -104,71 +104,75 @@ const Dashboard = ({ userData }) => {
           {Object.keys(organizedData).map((grade) => {
             const { checkInCount, checkOutCount, absentCount } =
               calculateCounters(organizedData[grade]);
-              return (
-                <div key={grade} className="mb-8">
-                  <div className="flex items-center justify-between mb-6 w-full">
-                    <h2 className="text-2xl font-semibold capitalize">{grade}</h2>
-                    <div className="flex space-x-4">
-                      <div className="bg-green-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
-                        {checkInCount}
-                      </div>
-                      <div className="bg-gray-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
-                        {absentCount}
-                      </div>
-                      <div className="bg-yellow-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
-                        {checkOutCount}
-                      </div>
+            return (
+              <div key={grade} className="mb-8">
+                <div className="flex items-center justify-between mb-6 w-full">
+                  <h2 className="text-2xl font-semibold capitalize">{grade}</h2>
+                  <div className="flex space-x-4">
+                    <div className="bg-green-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
+                      {checkInCount}
+                    </div>
+                    <div className="bg-gray-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
+                      {absentCount}
+                    </div>
+                    <div className="bg-yellow-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
+                      {checkOutCount}
                     </div>
                   </div>
-
-                  {organizedData[grade].length > 0 ? (
-                    organizedData[grade].map((student) => (
-                      <div
-                        key={student.name}
-                        className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg"
-                      >
-                        <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
-                          <h3 className="text-lg font-semibold truncate text-white">
-                            {student.name}
-                          </h3>
-                          <ul className="flex space-x-4 justify-end">
-                            {student.attendance[formatDate(selectedDate)] ? (
-                              <>
-                                <span className="bg-green-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
-                                  {student.attendance[formatDate(selectedDate)].checkIn
-                                    ? new Date(
-                                        student.attendance[formatDate(selectedDate)].checkIn
-                                      ).toLocaleTimeString([], {
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                      })
-                                    : "NA"}
-                                </span>
-                                <span className="bg-yellow-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
-                                  {student.attendance[formatDate(selectedDate)].checkOut
-                                    ? new Date(
-                                        student.attendance[formatDate(selectedDate)].checkOut
-                                      ).toLocaleTimeString([], {
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                      })
-                                    : "NA"}
-                                </span>
-                              </>
-                            ) : (
-                              <span className="text-white px-3 py-2">Absent</span>
-                            )}
-                          </ul>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-gray-400">No data available for {grade}</p>
-                  )}
                 </div>
-              );
 
-
+                {organizedData[grade].length > 0 ? (
+                  organizedData[grade].map((student) => (
+                    <div
+                      key={student.name}
+                      className="mb-4 p-4 bg-gray-800 rounded-lg transition duration-300 hover:shadow-lg"
+                    >
+                      <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
+                        <h3 className="text-lg font-semibold truncate text-white">
+                          {student.name}
+                        </h3>
+                        <ul className="flex space-x-4 justify-end">
+                          {student.attendance[formatDate(selectedDate)] ? (
+                            <>
+                              <span className="bg-green-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
+                                {student.attendance[formatDate(selectedDate)]
+                                  .checkIn
+                                  ? new Date(
+                                      student.attendance[
+                                        formatDate(selectedDate)
+                                      ].checkIn
+                                    ).toLocaleTimeString([], {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                    })
+                                  : "NA"}
+                              </span>
+                              <span className="bg-yellow-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
+                                {student.attendance[formatDate(selectedDate)]
+                                  .checkOut
+                                  ? new Date(
+                                      student.attendance[
+                                        formatDate(selectedDate)
+                                      ].checkOut
+                                    ).toLocaleTimeString([], {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                    })
+                                  : "NA"}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="text-white px-3 py-2">Absent</span>
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-400">No data available for {grade}</p>
+                )}
+              </div>
+            );
           })}
         </div>
       </div>
