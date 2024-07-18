@@ -120,7 +120,7 @@ const Dashboard = ({ userData }) => {
 >
   <h2 className="text-2xl font-semibold capitalize w-24">{grade}</h2>
   <div className="flex space-x-4">
-    <div className="bg-green-500 text-white w- px-5 py-2 rounded-md flex-grow text-center shadow-md">
+    <div className="bg-green-500 text-white w-4 px-5 py-2 rounded-md flex-grow text-center shadow-md">
       {checkInCount}
     </div>
     <div className="bg-gray-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
