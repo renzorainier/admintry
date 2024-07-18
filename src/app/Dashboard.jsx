@@ -99,36 +99,43 @@ const Dashboard = ({ userData }) => {
           />
         </div>
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Total Check-Ins: {totalCheckIns}</h2>
-          <h2 className="text-xl font-semibold mb-2">Total Check-Outs: {totalCheckOuts}</h2>
-          <h2 className="text-xl font-semibold">Total Absents: {totalAbsents}</h2>
+          <h2 className="text-xl font-semibold mb-2">
+            Total Check-Ins: {totalCheckIns}
+          </h2>
+          <h2 className="text-xl font-semibold mb-2">
+            Total Check-Outs: {totalCheckOuts}
+          </h2>
+          <h2 className="text-xl font-semibold">
+            Total Absents: {totalAbsents}
+          </h2>
         </div>
         <div>
           {Object.keys(organizedData).map((grade) => {
-            const { checkInCount, checkOutCount, absentCount } = calculateCounters(organizedData[grade]);
+            const { checkInCount, checkOutCount, absentCount } =
+              calculateCounters(organizedData[grade]);
             return (
               <div key={grade} className="mb-6">
                 <div
-                  className="flex items-center  w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
-                  onClick={() => toggleGrade(grade)}
-                >
-                  <h2 className="text-2xl font-semibold capitalize w-24">{grade}</h2>
-                  <div className=" flex justify-end">
-
-                  <div className="flex space-x-4">
-                    <div className="bg-green-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
-                      {checkInCount}
+                  className="flex items-center w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
+                  onClick={() => toggleGrade(grade)}>
+                  <h2 className="text-2xl font-semibold capitalize w-24">
+                    {grade}
+                  </h2>
+                  <div className="flex justify-end w-full">
+                    <div className="flex space-x-4">
+                      <div className="bg-green-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
+                        {checkInCount}
+                      </div>
+                      <div className="bg-gray-700 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
+                        {absentCount}
+                      </div>
+                      <div className="bg-yellow-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
+                        {checkOutCount}
+                      </div>
                     </div>
-                    <div className="bg-gray-700 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
-                      {absentCount}
-                    </div>
-                    <div className="bg-yellow-500 text-white px-4 py-2 rounded-md flex-grow text-center shadow-md">
-                      {checkOutCount}
-                    </div>
-                  </div>
                   </div>
                   <FaChevronDown
-                    className={`transition-transform ${
+                    className={`transition-transform ml-4 ${
                       expandedGrades[grade] ? "rotate-180" : ""
                     }`}
                   />
@@ -140,24 +147,37 @@ const Dashboard = ({ userData }) => {
                       organizedData[grade].map((student) => (
                         <div
                           key={student.name}
-                          className="mb-2 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg"
-                        >
+                          className="mb-2 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg">
                           <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
-                            <h3 className="text-lg font-semibold truncate text-white">{student.name}</h3>
+                            <h3 className="text-lg font-semibold truncate text-white">
+                              {student.name}
+                            </h3>
                             <ul className="flex  justify-end">
                               {student.attendance[formatDate(selectedDate)] ? (
                                 <>
                                   <span className="bg-green-500 text-white px-3 py-2 rounded-l-md w-24 text-center shadow-sm">
-                                    {student.attendance[formatDate(selectedDate)].checkIn
-                                      ? new Date(student.attendance[formatDate(selectedDate)].checkIn).toLocaleTimeString([], {
+                                    {student.attendance[
+                                      formatDate(selectedDate)
+                                    ].checkIn
+                                      ? new Date(
+                                          student.attendance[
+                                            formatDate(selectedDate)
+                                          ].checkIn
+                                        ).toLocaleTimeString([], {
                                           hour: "2-digit",
                                           minute: "2-digit",
                                         })
                                       : "NA"}
                                   </span>
                                   <span className="bg-yellow-500 text-white px-3 py-2 rounded-r-md w-24 text-center shadow-sm">
-                                    {student.attendance[formatDate(selectedDate)].checkOut
-                                      ? new Date(student.attendance[formatDate(selectedDate)].checkOut).toLocaleTimeString([], {
+                                    {student.attendance[
+                                      formatDate(selectedDate)
+                                    ].checkOut
+                                      ? new Date(
+                                          student.attendance[
+                                            formatDate(selectedDate)
+                                          ].checkOut
+                                        ).toLocaleTimeString([], {
                                           hour: "2-digit",
                                           minute: "2-digit",
                                         })
@@ -165,14 +185,18 @@ const Dashboard = ({ userData }) => {
                                   </span>
                                 </>
                               ) : (
-                                <span className="text-white px-3 py-2 bg-gray-700 rounded-md">Absent</span>
+                                <span className="text-white px-3 py-2 bg-gray-700 rounded-md">
+                                  Absent
+                                </span>
                               )}
                             </ul>
                           </div>
                         </div>
                       ))
                     ) : (
-                      <p className="text-gray-400">No data available for {grade}</p>
+                      <p className="text-gray-400">
+                        No data available for {grade}
+                      </p>
                     )}
                   </div>
                 )}
