@@ -109,7 +109,7 @@ const Dashboard = ({ userData }) => {
             return (
               <div key={grade} className="mb-6">
                 <div
-                  className="flex items-center justify-between w-full bg-gray-800 p-5 rounded-lg cursor-pointer"
+                  className="flex items-center justify-between w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
                   onClick={() => toggleGrade(grade)}
                 >
                   <h2 className="text-2xl font-semibold capitalize w-24">{grade}</h2>
@@ -124,6 +124,11 @@ const Dashboard = ({ userData }) => {
                       {checkOutCount}
                     </div>
                   </div>
+                  <FaChevronDown
+                    className={`transition-transform ${
+                      expandedGrades[grade] ? "rotate-180" : ""
+                    }`}
+                  />
                 </div>
 
                 {expandedGrades[grade] && (
@@ -175,8 +180,6 @@ const Dashboard = ({ userData }) => {
       </div>
     </main>
   );
-
-
 };
 
 export default Dashboard;
