@@ -67,6 +67,13 @@ const Dashboard = ({ userData }) => {
     return { checkInCount, checkOutCount, absentCount };
   };
 
+  const toggleGrade = (grade) => {
+    setExpandedGrades((prevExpandedGrades) => ({
+      ...prevExpandedGrades,
+      [grade]: !prevExpandedGrades[grade],
+    }));
+  };
+
   const filteredData = filterDataForDate(userData, selectedDate);
   const organizedData = organizeDataByGrade(filteredData);
 
@@ -77,13 +84,6 @@ const Dashboard = ({ userData }) => {
     setTotalCheckOuts(checkOutCount);
     setTotalAbsents(absentCount);
   }, [filteredData]);
-
-  const toggleGrade = (grade) => {
-    setExpandedGrades((prev) => ({
-      ...prev,
-      [grade]: !prev[grade],
-    }));
-  };
 
   return (
     <main className="flex min-h-screen bg-[#031525] justify-center items-center">
@@ -115,8 +115,11 @@ const Dashboard = ({ userData }) => {
             return (
               <div key={grade} className="mb-8">
                 <div
-                  className="flex items-center justify-between mb-6 w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
-                  onClick={() => toggleGrade(grade)}>
+                  className={`flex items-center justify-between mb-6 w-full bg-gray-800 p-4 rounded-lg cursor-pointer ${
+                    expandedGrades[grade] ? "bg-gray-700" : ""
+                  }`}
+                  onClick={() => toggleGrade(grade)}
+                >
                   <h2 className="text-2xl font-semibold capitalize w-24">
                     {grade}
                   </h2>
@@ -139,7 +142,8 @@ const Dashboard = ({ userData }) => {
                       organizedData[grade].map((student) => (
                         <div
                           key={student.name}
-                          className="mb-1 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg">
+                          className="mb-1 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg"
+                        >
                           <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
                             <h3 className="text-lg font-semibold truncate text-white">
                               {student.name}
