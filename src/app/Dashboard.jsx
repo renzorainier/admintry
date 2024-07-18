@@ -115,9 +115,7 @@ const Dashboard = ({ userData }) => {
             return (
               <div key={grade} className="mb-8">
                 <div
-                  className={`flex items-center justify-between mb-6 w-full bg-gray-800 p-4 rounded-lg cursor-pointer ${
-                    expandedGrades[grade] ? "bg-gray-700" : ""
-                  }`}
+                  className="flex items-center justify-between mb-6 w-full bg-gray-800 p-4 rounded-lg cursor-pointer"
                   onClick={() => toggleGrade(grade)}
                 >
                   <h2 className="text-2xl font-semibold capitalize w-24">
@@ -137,12 +135,12 @@ const Dashboard = ({ userData }) => {
                 </div>
 
                 {expandedGrades[grade] && (
-                  <>
+                  <div className="mt-4">
                     {organizedData[grade].length > 0 ? (
                       organizedData[grade].map((student) => (
                         <div
                           key={student.name}
-                          className="mb-1 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg"
+                          className="mb-4 p-4 bg-gray-700 rounded-lg transition duration-300 hover:shadow-lg"
                         >
                           <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
                             <h3 className="text-lg font-semibold truncate text-white">
@@ -152,9 +150,8 @@ const Dashboard = ({ userData }) => {
                               {student.attendance[formatDate(selectedDate)] ? (
                                 <>
                                   <span className="bg-green-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
-                                    {student.attendance[
-                                      formatDate(selectedDate)
-                                    ].checkIn
+                                    {student.attendance[formatDate(selectedDate)]
+                                      .checkIn
                                       ? new Date(
                                           student.attendance[
                                             formatDate(selectedDate)
@@ -166,9 +163,8 @@ const Dashboard = ({ userData }) => {
                                       : "NA"}
                                   </span>
                                   <span className="bg-yellow-500 text-white p-2 rounded-md w-24 text-center shadow-sm">
-                                    {student.attendance[
-                                      formatDate(selectedDate)
-                                    ].checkOut
+                                    {student.attendance[formatDate(selectedDate)]
+                                      .checkOut
                                       ? new Date(
                                           student.attendance[
                                             formatDate(selectedDate)
@@ -194,7 +190,7 @@ const Dashboard = ({ userData }) => {
                         No data available for {grade}
                       </p>
                     )}
-                  </>
+                  </div>
                 )}
               </div>
             );
@@ -203,6 +199,7 @@ const Dashboard = ({ userData }) => {
       </div>
     </main>
   );
+
 };
 
 export default Dashboard;
