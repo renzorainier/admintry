@@ -135,7 +135,7 @@ const Dashboard = ({ userData }) => {
                 </div>
 
                 {expandedGrades[grade] && (
-                  <div className="mt-4">
+                  <div className="">
                     {organizedData[grade].length > 0 ? (
                       organizedData[grade].map((student) => (
                         <div
