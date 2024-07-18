@@ -91,14 +91,6 @@ const Dashboard = ({ userData }) => {
       <div className="text-white p-8 rounded-xl shadow-xl w-full max-w-3xl">
         <h1 className="text-4xl font-bold mb-8">Dashboard</h1>
         <div className="mb-8">
-          <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            dateFormat="yyyy-MM-dd"
-            className="p-3 bg-gray-700 text-white rounded-lg w-full"
-          />
-        </div>
-        <div className="mb-8">
           <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-8 rounded-lg shadow-xl">
             <div className="flex items-center mb-6">
               <div className="bg-green-500 text-white p-4 rounded-full shadow-lg">
@@ -125,6 +117,14 @@ const Dashboard = ({ userData }) => {
               </h2>
             </div>
           </div>
+          <div className="mb-8">
+          <DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            dateFormat="yyyy-MM-dd"
+            className="p-3 bg-gray-700 text-white rounded-lg w-full"
+          />
+        </div>
         </div>
 
         <div>
