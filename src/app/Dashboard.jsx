@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { FaChevronDown } from "react-icons/fa";
 
 const Dashboard = ({ userData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
