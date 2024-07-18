@@ -105,8 +105,8 @@ const Dashboard = ({ userData }) => {
             const { checkInCount, checkOutCount, absentCount } =
               calculateCounters(organizedData[grade]);
             return (
-              <div key={grade} className="mb-8">
-                <div className="flex items-center justify-between mb-6 w-full">
+              <div key={grade} className="mb-8 ">
+                <div className="flex items-center justify-between mb-6 w-full bg-gray-800 p-4 rounded-lg">
                   <h2 className="text-2xl font-semibold capitalize">{grade}</h2>
                   <div className="flex space-x-4">
                     <div className="bg-green-500 text-white px-5 py-2 rounded-md flex-grow text-center shadow-md">
