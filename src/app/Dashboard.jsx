@@ -87,7 +87,7 @@ const Dashboard = ({ userData }) => {
 
   return (
     <main className="flex min-h-screen bg-[#031525] justify-center items-center">
-      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+      <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-full max-w-lg">
         <h1 className="text-4xl font-bold mb-6">Dashboard</h1>
         <div className="mb-6">
           <DatePicker
