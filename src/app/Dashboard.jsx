@@ -87,7 +87,7 @@ const Dashboard = ({ userData }) => {
   }, [filteredData]);
 
   return (
-    <main className="flex min-h-screen bg-[#031524] justify-center items-center">
+    <main className="flex min-h-screen bg-[#031525] justify-center items-center">
       <div className="text-white p-8 rounded-xl shadow-xl w-full max-w-3xl">
         <h1 className="text-4xl font-bold mb-8">Dashboard</h1>
         <div className="mb-8">
