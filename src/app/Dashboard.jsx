@@ -99,35 +99,34 @@ const Dashboard = ({ userData }) => {
           />
         </div>
         <div className="mb-8">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-md">
-            <div className="flex items-center mb-4">
-              <div className="bg-green-500 text-white p-3 rounded-full shadow-md">
-                <FaCheck size={24} />
-              </div>
-              <h2 className="text-xl font-semibold ml-4 text-white">
-                Total Check-Ins:{" "}
-                <span className="text-2xl">{totalCheckIns}</span>
-              </h2>
-            </div>
-            <div className="flex items-center mb-4">
-              <div className="bg-yellow-500 text-white p-3 rounded-full shadow-md">
-                <FaSignOutAlt size={24} />
-              </div>
-              <h2 className="text-xl font-semibold ml-4 text-white">
-                Total Check-Outs:{" "}
-                <span className="text-2xl">{totalCheckOuts}</span>
-              </h2>
-            </div>
-            <div className="flex items-center">
-              <div className="bg-red-500 text-white p-3 rounded-full shadow-md">
-                <FaTimes size={24} />
-              </div>
-              <h2 className="text-xl font-semibold ml-4 text-white">
-                Total Absents: <span className="text-2xl">{totalAbsents}</span>
-              </h2>
-            </div>
-          </div>
-        </div>
+  <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-8 rounded-lg shadow-xl">
+    <div className="flex items-center mb-6">
+      <div className="bg-green-500 text-white p-4 rounded-full shadow-lg">
+        <FaCheck size={28} />
+      </div>
+      <h2 className="text-2xl font-bold ml-6 text-white">
+        Log In: <span className="text-3xl">{totalCheckIns}</span>
+      </h2>
+    </div>
+    <div className="flex items-center mb-6">
+      <div className="bg-yellow-500 text-white p-4 rounded-full shadow-lg">
+        <FaSignOutAlt size={28} />
+      </div>
+      <h2 className="text-2xl font-bold ml-6 text-white">
+        Log Out: <span className="text-3xl">{totalCheckOuts}</span>
+      </h2>
+    </div>
+    <div className="flex items-center">
+      <div className="bg-red-500 text-white p-4 rounded-full shadow-lg">
+        <FaTimes size={28} />
+      </div>
+      <h2 className="text-2xl font-bold ml-6 text-white">
+        Absents: <span className="text-3xl">{totalAbsents}</span>
+      </h2>
+    </div>
+  </div>
+</div>
+
 
         <div>
           {Object.keys(organizedData).map((grade) => {
