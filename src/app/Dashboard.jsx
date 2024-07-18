@@ -158,7 +158,7 @@ const Dashboard = ({ userData }) => {
                       </div>
                     </div>
                   </div>
-                  <FaChevronDown
+                  <FaChevronDown style={{ fontSize: "2.0em" }}
                     className={`transition-transform ml-4 ${
                       expandedGrades[grade] ? "rotate-180" : ""
                     }`}
