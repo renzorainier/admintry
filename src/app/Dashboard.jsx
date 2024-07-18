@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FaChevronDown } from "react-icons/fa";
+import { FaCheck, FaSignOutAlt, FaTimes, FaChevronDown } from "react-icons/fa";
 
 const Dashboard = ({ userData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -99,16 +99,36 @@ const Dashboard = ({ userData }) => {
           />
         </div>
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">
-            Total Check-Ins: {totalCheckIns}
-          </h2>
-          <h2 className="text-xl font-semibold mb-2">
-            Total Check-Outs: {totalCheckOuts}
-          </h2>
-          <h2 className="text-xl font-semibold">
-            Total Absents: {totalAbsents}
-          </h2>
+          <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <div className="flex items-center mb-4">
+              <div className="bg-green-500 text-white p-3 rounded-full shadow-md">
+                <FaCheck size={24} />
+              </div>
+              <h2 className="text-xl font-semibold ml-4 text-white">
+                Total Check-Ins:{" "}
+                <span className="text-2xl">{totalCheckIns}</span>
+              </h2>
+            </div>
+            <div className="flex items-center mb-4">
+              <div className="bg-yellow-500 text-white p-3 rounded-full shadow-md">
+                <FaSignOutAlt size={24} />
+              </div>
+              <h2 className="text-xl font-semibold ml-4 text-white">
+                Total Check-Outs:{" "}
+                <span className="text-2xl">{totalCheckOuts}</span>
+              </h2>
+            </div>
+            <div className="flex items-center">
+              <div className="bg-red-500 text-white p-3 rounded-full shadow-md">
+                <FaTimes size={24} />
+              </div>
+              <h2 className="text-xl font-semibold ml-4 text-white">
+                Total Absents: <span className="text-2xl">{totalAbsents}</span>
+              </h2>
+            </div>
+          </div>
         </div>
+
         <div>
           {Object.keys(organizedData).map((grade) => {
             const { checkInCount, checkOutCount, absentCount } =
