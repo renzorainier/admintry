@@ -9,10 +9,24 @@ const Dashboard = ({ userData }) => {
   const [totalCheckOuts, setTotalCheckOuts] = useState(0);
   const [totalAbsents, setTotalAbsents] = useState(0);
   const [expandedGrades, setExpandedGrades] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredUserData, setFilteredUserData] = useState(userData);
 
   useEffect(() => {
     console.log("Received userData in Dashboard:", userData);
   }, [userData]);
+
+  useEffect(() => {
+    if (searchQuery) {
+      setFilteredUserData(
+        userData.filter((student) =>
+          student.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredUserData(userData);
+    }
+  }, [searchQuery, userData]);
 
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -75,7 +89,7 @@ const Dashboard = ({ userData }) => {
     }));
   };
 
-  const filteredData = filterDataForDate(userData, selectedDate);
+  const filteredData = filterDataForDate(filteredUserData, selectedDate);
   const organizedData = organizeDataByGrade(filteredData);
 
   useEffect(() => {
@@ -87,48 +101,66 @@ const Dashboard = ({ userData }) => {
   }, [filteredData]);
 
   return (
-    <main className="flex min-h-screen bg-[#031525] justify-center items-center">
+    <main className="flex min-h-screen bg-[#031525] mt-12 justify-center items-center">
       <div className="text-white p-8 rounded-xl shadow-xl w-full max-w-3xl">
-        <h1 className="text-4xl font-bold mb-8">Dashboard</h1>
-        <div className="mb-8">
-          <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-8 rounded-lg shadow-xl">
-            <div className="flex items-center mb-6">
+        <div className="space-y-4 mb-8">
+          <div className="bg-gradient-to-r from-[#035172] to-[#0587be] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
+            <div className="text-white font-bold text-3xl">Attendance</div>
+            <div className="text-white text-lg">{userData.name}</div>
+          </div>
+
+          <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-8 rounded-lg shadow-xl space-y-6">
+            <div className="flex items-center space-x-6">
               <div className="bg-green-500 text-white p-4 rounded-full shadow-lg">
                 <FaCheck size={28} />
               </div>
-              <h2 className="text-2xl font-bold ml-6 text-white">
+              <h2 className="text-2xl font-bold text-white">
                 Scanned In: <span className="text-3xl">{totalCheckIns}</span>
               </h2>
             </div>
-            <div className="flex items-center mb-6">
+            <div className="flex items-center space-x-6">
               <div className="bg-yellow-500 text-white p-4 rounded-full shadow-lg">
                 <FaSignOutAlt size={28} />
               </div>
-              <h2 className="text-2xl font-bold ml-6 text-white">
+              <h2 className="text-2xl font-bold text-white">
                 Scanned Out: <span className="text-3xl">{totalCheckOuts}</span>
               </h2>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center space-x-6">
               <div className="bg-red-500 text-white p-4 rounded-full shadow-lg">
                 <FaTimes size={28} />
               </div>
-              <h2 className="text-2xl font-bold ml-6 text-white">
+              <h2 className="text-2xl font-bold text-white">
                 Absents: <span className="text-3xl">{totalAbsents}</span>
               </h2>
             </div>
           </div>
-          <div className="mb-8">
-          <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            dateFormat="yyyy-MM-dd"
+
+          <div>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              dateFormat="yyyy-MM-dd"
+              className="p-3 bg-gray-700 text-white rounded-lg w-full"
+            />
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <input
+            type="text"
+            placeholder="Search by student name"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="p-3 bg-gray-700 text-white rounded-lg w-full"
           />
         </div>
-        </div>
-
         <div>
           {Object.keys(organizedData).map((grade) => {
+            if (organizedData[grade].length === 0) {
+              return null;
+            }
+
             const { checkInCount, checkOutCount, absentCount } =
               calculateCounters(organizedData[grade]);
             return (
@@ -158,7 +190,8 @@ const Dashboard = ({ userData }) => {
                       </div>
                     </div>
                   </div>
-                  <FaChevronDown style={{ fontSize: "2.0em" }}
+                  <FaChevronDown
+                    style={{ fontSize: "2.0em" }}
                     className={`transition-transform ml-4 ${
                       expandedGrades[grade] ? "rotate-180" : ""
                     }`}

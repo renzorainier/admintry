@@ -55,6 +55,10 @@ const SignIn = () => {
           </div>
         </div>
         <div className="md:w-1/2 p-8 flex flex-col justify-center items-center">
+        <h1 className="text-5xl font-extrabold text-gray-700  inline-block px-6 py-3 ">
+  Admin
+</h1>
+
           {error && <p className="text-red-500 mb-4">Error Logging in</p>}
           <input
             type="email"
