@@ -2,57 +2,120 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '@/app/firebase/config';
 import { useRouter } from 'next/navigation.js';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 import Dashboard from './Dashboard'; // Import your Dashboard component
 
 export default function Main() {
   const [user] = useAuthState(auth);
   const [userData, setUserData] = useState(null);
   const router = useRouter();
-  const userSession = typeof window !== 'undefined' ? sessionStorage.getItem('user') : null;
   const adminUID = 'qFFVjtC9KSWip3AID3IEFz5UrUO2'; // Admin UID
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (!user && !userSession) {
+    const handleUserCheck = () => {
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+
+      if (!user && !storedUser) {
         router.push('/sign-in');
         return;
       }
 
-      // Ensure only the admin UID can proceed
       if (user && user.uid !== adminUID) {
         console.error('Access denied. Only admin can access this.');
         router.push('/error'); // Redirect to error page for unauthorized access
         return;
       }
 
-      try {
-        // Fetch all documents in the "users" collection
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user));
         const usersCollectionRef = collection(db, 'users');
-        const querySnapshot = await getDocs(usersCollectionRef);
 
-        const usersData = [];
-        querySnapshot.forEach((doc) => {
-          usersData.push(doc.data());
+        // Set up listener for real-time updates
+        const unsubscribe = onSnapshot(usersCollectionRef, (querySnapshot) => {
+          const usersData = [];
+          querySnapshot.forEach((doc) => {
+            usersData.push(doc.data());
+          });
+
+          setUserData(usersData); // Set state with all users' data
+          console.log('Fetched user data:', usersData); // Log fetched data to console
+        }, (error) => {
+          console.error('Error fetching users data:', error);
         });
 
-        setUserData(usersData); // Set state with all users' data
-
-        console.log('Fetched user data:', usersData); // Log fetched data to console
-      } catch (error) {
-        console.error('Error fetching users data:', error);
+        return () => unsubscribe(); // Cleanup function to unsubscribe when component unmounts
       }
     };
 
-    fetchUserData();
-  }, [user, userSession, router]);
+    handleUserCheck();
+  }, [user, router]);
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#031525]  justify-between">      {/* Render Dashboard component with userData passed as prop */}
-      {userData && <Dashboard userData={userData} />}
+    <main className="flex min-h-screen flex-col bg-[#031525] justify-between">
+      {userData && <Dashboard userData={userData} />} {/* Render Dashboard component with userData passed as prop */}
     </main>
   );
 }
+
+
+
+
+//working before sync 27
+// import { useEffect, useState } from 'react';
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import { auth, db } from '@/app/firebase/config';
+// import { useRouter } from 'next/navigation.js';
+// import { collection, getDocs } from 'firebase/firestore';
+// import Dashboard from './Dashboard'; // Import your Dashboard component
+
+// export default function Main() {
+//   const [user] = useAuthState(auth);
+//   const [userData, setUserData] = useState(null);
+//   const router = useRouter();
+//   const userSession = typeof window !== 'undefined' ? sessionStorage.getItem('user') : null;
+//   const adminUID = 'qFFVjtC9KSWip3AID3IEFz5UrUO2'; // Admin UID
+
+//   useEffect(() => {
+//     const fetchUserData = async () => {
+//       if (!user && !userSession) {
+//         router.push('/sign-in');
+//         return;
+//       }
+
+//       // Ensure only the admin UID can proceed
+//       if (user && user.uid !== adminUID) {
+//         console.error('Access denied. Only admin can access this.');
+//         router.push('/error'); // Redirect to error page for unauthorized access
+//         return;
+//       }
+
+//       try {
+//         // Fetch all documents in the "users" collection
+//         const usersCollectionRef = collection(db, 'users');
+//         const querySnapshot = await getDocs(usersCollectionRef);
+
+//         const usersData = [];
+//         querySnapshot.forEach((doc) => {
+//           usersData.push(doc.data());
+//         });
+
+//         setUserData(usersData); // Set state with all users' data
+
+//         console.log('Fetched user data:', usersData); // Log fetched data to console
+//       } catch (error) {
+//         console.error('Error fetching users data:', error);
+//       }
+//     };
+
+//     fetchUserData();
+//   }, [user, userSession, router]);
+
+//   return (
+//     <main className="flex min-h-screen flex-col bg-[#031525]  justify-between">      {/* Render Dashboard component with userData passed as prop */}
+//       {userData && <Dashboard userData={userData} />}
+//     </main>
+//   );
+// }
 
 
 

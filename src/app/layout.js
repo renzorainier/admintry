@@ -5,7 +5,7 @@ import { Urbanist } from 'next/font/google'
 const inter = Urbanist({ subsets: ['latin'] })
 
 export const metadata = {
-  title: "MVBA",
+  title: "MVBA ADMIN",
   description: "Metro View Baptist Academy",
 };
 
